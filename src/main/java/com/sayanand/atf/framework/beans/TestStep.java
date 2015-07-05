@@ -7,7 +7,7 @@ public class TestStep {
 	private String name;
 	private String description;
 	
-	private List<TestStepData> testDate;
+	private List<TestStepData> testData;
 	private List<TestExpectedResult> testExpctRes;
 	
 	
@@ -29,11 +29,11 @@ public class TestStep {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public List<TestStepData> getTestDate() {
-		return testDate;
+	public List<TestStepData> getTestData() {
+		return testData;
 	}
-	public void setTestDate(List<TestStepData> testDate) {
-		this.testDate = testDate;
+	public void setTestData(List<TestStepData> testDate) {
+		this.testData = testDate;
 	}
 	public List<TestExpectedResult> getTestExpctRes() {
 		return testExpctRes;

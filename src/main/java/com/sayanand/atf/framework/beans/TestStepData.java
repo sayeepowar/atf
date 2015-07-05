@@ -4,10 +4,10 @@ public class TestStepData {
 
 	private int id;
 	private String name;
-	private String type;
+	private ElementType type;
 	private String value;
 	private String locationXPath;
-	private String action;
+	private Action action;
 	
 	public int getId() {
 		return id;
@@ -21,10 +21,10 @@ public class TestStepData {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getType() {
+	public ElementType getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(ElementType type) {
 		this.type = type;
 	}
 	public String getValue() {
@@ -39,10 +39,10 @@ public class TestStepData {
 	public void setLocationXPath(String locationXPath) {
 		this.locationXPath = locationXPath;
 	}
-	public String getAction() {
+	public Action getAction() {
 		return action;
 	}
-	public void setAction(String action) {
+	public void setAction(Action action) {
 		this.action = action;
 	}	
 	

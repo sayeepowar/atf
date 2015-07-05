@@ -2,5 +2,5 @@ package com.sayanand.atf.framework;
 
 public interface TestRun {
 
-	public void executeTest(String testName);
+	public void executeTest(String testName) throws Exception ;
 }

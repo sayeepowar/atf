@@ -4,7 +4,7 @@ public class TestExpectedResult {
 
 	private int id;
 	private String name;
-	private String type;
+	private ElementType type;
 	private String locationXPath;
 	private String value;
 	public int getId() {
@@ -19,10 +19,10 @@ public class TestExpectedResult {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getType() {
+	public ElementType getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(ElementType type) {
 		this.type = type;
 	}
 	public String getLocationXPath() {

@@ -7,6 +7,8 @@ public class TestDetails {
 	private String name;
 	private String description;
 	
+	private String url;
+	
 	private List<TestStep> testSteps;
 
 	public List<TestStep> getTestSteps() {
@@ -41,10 +43,19 @@ public class TestDetails {
 		this.description = description;
 	}
 
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
 	@Override
 	public String toString() {
 		return "TestDetails [id=" + id + ", name=" + name + ", description="
-				+ description + ", testSteps=" + testSteps + "]";
+				+ description + ", url=" + url + ", testSteps=" + testSteps
+				+ "]";
 	}
 	
 	

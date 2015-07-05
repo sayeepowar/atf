@@ -16,6 +16,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.sayanand.atf.framework.beans.Action;
+import com.sayanand.atf.framework.beans.ElementType;
 import com.sayanand.atf.framework.beans.TestDetails;
 import com.sayanand.atf.framework.beans.TestExpectedResult;
 import com.sayanand.atf.framework.beans.TestStep;
@@ -30,22 +32,24 @@ public class TestDAOImpl implements TestDAO {
 	private String SQL_GET_TEST_DETAILS = "select * from TEST_CASES where name = :name";
 	private String SQL_GET_TEST_STEPS = "select steps.* from TEST_CASE_STEPS_MAPPING map, TEST_CASE_STEPS steps where steps.ID = map.TEST_STEP_ID and map.TEST_ID= :id order by map.ORD";
 	private String SQL_GET_TEST_STEP_DATA = "select data.* from TEST_STEP_DATA_MAPPING map, TEST_STEP_DATA data where map.TEST_STEP_ID = :id and map.TEST_DATA_ID=data.ID order by map.ord";
-	private String SQL_GET_TEST_EXPCT_RES = "select exptres.* from TEST_EXPECTED_RES_MAPPING map, TEST_EXPECTED_RES res where map.TEST_STEP_ID = :id and map.TEST_EXP_RES_ID = res.id order by map.ORD";
+	private String SQL_GET_TEST_EXPCT_RES = "select res.* from TEST_EXPECTED_RES_MAPPING map, TEST_EXPECTED_RES res where map.TEST_STEP_ID = :id and map.TEST_EXP_RES_ID = res.id order by map.ORD";
 	
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
 	public TestDetails getTestDetails(String name) {
 		logger.info("Getting details from db for {}", name);
-		String sql = SQL_GET_TEST_DETAILS + "'" + name +"'";
+		
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("name", name);
-		TestDetails testDetails = this.jdbcTemplate.query(sql, paramMap, new ResultSetExtractor<TestDetails>() {
+		TestDetails testDetails = this.jdbcTemplate.query(SQL_GET_TEST_DETAILS, paramMap, new ResultSetExtractor<TestDetails>() {
 			public TestDetails extractData(ResultSet rs) throws SQLException,
 					DataAccessException {
+				rs.next();
 				TestDetails testDetails = new TestDetails();
 				testDetails.setId(rs.getInt("ID"));
 				testDetails.setName(rs.getString("NAME"));
+				testDetails.setUrl(rs.getString("URL"));
 				testDetails.setDescription(rs.getString("DESCRIPTION"));
 				return testDetails;
 			}			
@@ -69,13 +73,14 @@ public class TestDAOImpl implements TestDAO {
 
 			public TestStep mapRow(ResultSet rs, int arg1)
 					throws SQLException {
+				//rs.next();
 				TestStep step = new TestStep();
 				step.setId(rs.getInt("ID"));
 				step.setName(rs.getString("NAME"));
 				step.setDescription(rs.getString("DESCRIPTION"));
 				
 				List<TestStepData> testData = getTestStepData(step.getId());
-				step.setTestDate(testData);
+				step.setTestData(testData);
 				
 				List<TestExpectedResult> exptRests = getTestStepResult(step.getId());
 				step.setTestExpctRes(exptRests);				
@@ -95,13 +100,14 @@ public class TestDAOImpl implements TestDAO {
 
 			public TestStepData mapRow(ResultSet rs, int arg1)
 					throws SQLException {
+				//rs.next();
 				TestStepData data = new TestStepData();
 				data.setId(rs.getInt("ID"));
 				data.setName(rs.getString("ELEMENT_NAME"));
-				data.setType(rs.getString("ELEMENT_TYPE"));
+				data.setType(ElementType.valueOf(rs.getString("ELEMENT_TYPE")));
 				data.setValue(rs.getString("VALUE"));
 				data.setLocationXPath(rs.getString("LOCATION_XPATH"));
-				data.setAction(rs.getString("ACTION"));				
+				data.setAction(Action.valueOf(rs.getString("ACTION")));				
 				return data;
 			}			
 		});		
@@ -117,10 +123,11 @@ public class TestDAOImpl implements TestDAO {
 		List<TestExpectedResult> testExctResList = this.jdbcTemplate.query(SQL_GET_TEST_EXPCT_RES, params, new RowMapper<TestExpectedResult>() {
 			public TestExpectedResult mapRow(ResultSet rs, int arg1)
 					throws SQLException {
+				//rs.next();
 				TestExpectedResult testRes = new TestExpectedResult();
 				testRes.setId(rs.getInt("ID"));
 				testRes.setName(rs.getString("ELEMENT_NAME"));
-				testRes.setType(rs.getString("ELEMENT_TYPE"));
+				testRes.setType(ElementType.valueOf(rs.getString("ELEMENT_TYPE")));
 				testRes.setLocationXPath(rs.getString("LOCATION_XPATH"));
 				testRes.setValue(rs.getString("VALUE"));
 				return testRes;
