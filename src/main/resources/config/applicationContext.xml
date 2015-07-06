@@ -19,6 +19,8 @@
     	<constructor-arg><ref bean="dataSource"/></constructor-arg>
 	</bean>
 	
+	<bean class="com.sayanand.atf.framework.util.ATFContext"/>
+	
 	<bean id="ElementType.INPUT_TEXT" class="com.sayanand.atf.framework.beans.ElementType" factory-method="valueOf"><constructor-arg value="INPUT_TEXT" /></bean>
 	<bean id="ElementType.BUTTON" class="com.sayanand.atf.framework.beans.ElementType" factory-method="valueOf"><constructor-arg value="BUTTON" /></bean>
 	
@@ -26,5 +28,7 @@
     	<entry key="INPUT_TEXT" value-ref="textboxHandler"/>
     	<entry key="BUTTON" value-ref="buttonHandler"/>
 	</util:map>
+	
+	
 	
 </beans>

@@ -39,6 +39,8 @@ public class TestRunImpl implements TestRun {
 	@Autowired 
 	ElementHandler buttonHandler;
 	
+	
+	
 	@Autowired
 	private Map<String, ElementHandler> elementHandlerMap;
 	
@@ -72,6 +74,9 @@ public class TestRunImpl implements TestRun {
 						break;
 					case BUTTON :
 						buttonHandler.handleElemnt(webDriver, testStepData);
+						break;
+					case INPUT_PASS :
+						break;
 					default:
 				 		break;
 					}
@@ -95,6 +100,7 @@ public class TestRunImpl implements TestRun {
 				}
 			}
 		}
+		webDriver.quit();
 	}
 
 }
